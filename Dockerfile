@@ -1,5 +1,6 @@
-# Usa una imagen base oficial de Node.js (en lugar de n8n) para asegurarnos de que todo se instale correctamente
-FROM node:16-alpine
+
+# Usa una imagen base oficial de Node.js 18 (compatible con n8n)
+FROM node:18-alpine
 
 # Cambiamos al usuario root para tener permisos de instalación
 USER root
@@ -18,6 +19,4 @@ EXPOSE 5678
 
 # Comando por defecto para ejecutar n8n
 CMD ["n8n"]
-
-
 
