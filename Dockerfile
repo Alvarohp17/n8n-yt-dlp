@@ -1,19 +1,23 @@
-# Usa una imagen base oficial de n8n
-FROM n8nio/n8n:latest
+# Usa una imagen base oficial de Node.js (en lugar de n8n) para asegurarnos de que todo se instale correctamente
+FROM node:16-alpine
 
-# Instala yt-dlp en Alpine con permisos de superusuario
+# Cambiamos al usuario root para tener permisos de instalación
 USER root
-RUN apk add --no-cache curl ffmpeg \
+
+# Instala las dependencias necesarias para n8n
+RUN apk add --no-cache curl ffmpeg bash \
+    && npm install -g n8n \
     && curl -L https://yt-dlp.org/downloads/latest/yt-dlp -o /usr/local/bin/yt-dlp \
     && chmod a+rx /usr/local/bin/yt-dlp
 
-# Cambia el usuario de vuelta a n8n
+# Cambia al usuario no privilegiado de n8n
 USER node
 
-# Expone el puerto que usa n8n
+# Exponer el puerto 5678 para n8n
 EXPOSE 5678
 
-# Comando por defecto para iniciar n8n
+# Comando por defecto para ejecutar n8n
 CMD ["n8n"]
+
 
 
